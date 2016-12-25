@@ -1,5 +1,6 @@
 package socialtrade.bin;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
@@ -8,6 +9,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 public class TodayTaskTest extends BaseClass{
+	private String todayPoints;
 
 	@Test
 	public void testStartWorking() throws Exception{
@@ -16,23 +18,36 @@ public class TodayTaskTest extends BaseClass{
 		Assert.assertTrue(isElementPresent(By.id("paidclicks")));
 		Assert.assertTrue(isElementPresent(By.xpath("//span[@title='Click Task']")));
 		clickingLinks();
-		String todayPoints=getTodayCompletedTaskPoints();
-		
+		todayPoints=getTodayCompletedTaskPoints();
+		submitRedeemPoints();
 		
 	}
 	
 	public void clickingLinks() throws Exception{
-		int i=1;
+		int linkNum=Integer.valueOf(getTodayCompletedTaskPoints())+1;
 		while (isElementPresent(By.xpath("//b[@class='pending'][1]//following::span[2]"))) {
 				driver.findElement(By.xpath("//b[@class='pending'][1]//following::span[2]")).click();
-				System.out.println("clicking link number is  --> : "+i);
+				System.out.println("clicking link number is  --> : "+linkNum);
 				System.out.println("  ");
+				int i=1;
 			while(driver.getWindowHandles().size()>1){
-				System.out.println("----still window opened----");
+				System.out.println("----still popup window is opened----");
 				Thread.sleep(10000);
+				i++;
+				if (i>5) {
+					System.out.println("Alert message is present. So, navigating to child window to handle");
+					String myWindow=driver.getWindowHandle();
+					System.out.println("My window is :  "+myWindow);
+					Set<String> windows=driver.getWindowHandles();
+					for (String window : windows) {
+						driver.switchTo().window(window);
+					}
+					driver.switchTo().alert().dismiss();
+					driver.switchTo().window(myWindow);
+				}
 			}	
 			driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-			i++;
+			linkNum++;
 		}
 	}
 	
@@ -47,6 +62,8 @@ public class TodayTaskTest extends BaseClass{
 		driver.findElement(By.id("btncalredeemepoints")).click();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.findElement(By.id("rdmepoints")).sendKeys(getRedeemPointss);
+		driver.findElement(By.xpath("//div[@id='divredeemepoints']//input[@value='Submit']"));
+		
 	}
 
 }

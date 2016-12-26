@@ -62,8 +62,8 @@ public class TodayTaskTest extends BaseClass{
 		driver.findElement(By.id("btncalredeemepoints")).click();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.findElement(By.id("rdmepoints")).sendKeys(getRedeemPointss);
-		driver.findElement(By.xpath("//div[@id='divredeemepoints']//input[@value='Submit']"));
-		
+		driver.findElement(By.xpath("//div[@id='divredeemepoints']//input[@value='Submit']")).click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 
 }

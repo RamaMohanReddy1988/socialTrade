@@ -1,11 +1,13 @@
 package socialtrade.bin;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("unused")
@@ -19,7 +21,9 @@ public class TodayTaskTest extends BaseClass{
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Assert.assertTrue(isElementPresent(By.id("paidclicks")));
 		todayPoints=getTodayCompletedTaskPoints();
-		while (Integer.valueOf(getTodayCompletedTaskPoints())<125) {
+		List<WebElement> rows = driver.findElements(By.xpath("//tr[@class='row_self']"));
+		System.out.println("total today task links are  : "+rows.size());
+		while (Integer.valueOf(getTodayCompletedTaskPoints())<rows.size()) {
 			Assert.assertTrue(isElementPresent(By.xpath("//span[@title='Click Task']")));
 			clickingLinks();
 			todayPoints=getTodayCompletedTaskPoints();

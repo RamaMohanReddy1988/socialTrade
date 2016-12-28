@@ -1,5 +1,10 @@
 package socialtrade.bin;
 
+/*
+ * @Author
+ * Rama Mohan Reddy
+ */
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,14 +17,14 @@ public class BaseClass {
 
 	WebDriver driver = new FirefoxDriver();
 	
-	private String USERNAME="61828241";
-	private String PASSWORD="ramamohan@143";
+//	private String USERNAME="61828241";
+//	private String PASSWORD="ramamohan@143";
 	
 	//private String USERNAME="61913951";
 	//private String PASSWORD="chitti@143";
 	
-	//private String USERNAME="61993813";
-	//private String PASSWORD="lakshmi@15";
+	private String USERNAME="61993813";
+	private String PASSWORD="lakshmi@15";
 		
 	@BeforeClass
 	public void testLogin(){

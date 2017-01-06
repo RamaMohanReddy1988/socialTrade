@@ -16,7 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-@SuppressWarnings({ "unused", "deprecation" })
+@SuppressWarnings({ "deprecation" })
 public class TodayTaskTest extends BaseClass{
 	
 	private String todayPoints;
@@ -24,17 +24,18 @@ public class TodayTaskTest extends BaseClass{
 	
 	@Test
 	public void testStartWorking() throws Exception{
+		System.out.println("Clicking Advertisements-----");
 		driver.findElement(By.xpath("//a[text()='View Advertisements']")).click();
+		Thread.sleep(10000);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Assert.assertTrue(isElementPresent(By.id("paidclicks")));
-		todayPoints=getTodayCompletedTaskPoints();
 		List<WebElement> rows = driver.findElements(By.xpath("//tr[@class='row_self']"));
 		System.out.println("total today task links are  : "+rows.size());
 		while (Integer.valueOf(getTodayCompletedTaskPoints())<rows.size()) {
 			Assert.assertTrue(isElementPresent(By.xpath("//span[@title='Click Task']")));
 			clickingLinks();
 			todayPoints=getTodayCompletedTaskPoints();
-			submitRedeemPoints();
+			System.out.println("Finally completed links are :-  "+todayPoints);
 		}
 		
 		
@@ -50,9 +51,9 @@ public class TodayTaskTest extends BaseClass{
 				int i=1;
 			while(driver.getWindowHandles().size()>1){
 				System.out.println("----Still popup window is opened----");
-				Thread.sleep(11000);
+				Thread.sleep(13000);
 				i++;
-				if (i>5) {
+				if (i>6) {
 					System.out.println("Alert message is present. So, navigating to child window to handle");
 					String myWindow=driver.getWindowHandle();
 					System.out.println("My window is :  "+myWindow);
@@ -60,6 +61,7 @@ public class TodayTaskTest extends BaseClass{
 					for (String window : windows) {
 						driver.switchTo().window(window);
 					}
+					
 					driver.switchTo().alert().accept();
 					driver.switchTo().window(myWindow);
 				}
@@ -67,7 +69,8 @@ public class TodayTaskTest extends BaseClass{
 			if (i==1) {
 				driver.findElement(By.xpath("//div[@id='ajax-content']//i[@class='fa fa-refresh']")).click();
 			}
-			driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+			Thread.sleep(5000);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			linkNum++;
 		}
 	}
@@ -76,19 +79,5 @@ public class TodayTaskTest extends BaseClass{
 		return driver.findElement(By.id("paidPoints")).getText();
 	}
 	
-	public void submitRedeemPoints(){
-		driver.findElement(By.xpath("//li[@id='redeem']/a[text()='Redeem  ePoints']")).click();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		String getRedeemPoints=driver.findElement(By.id("lblcalredeemepoints")).getText();
-		System.out.println("Pending redeem points are :- "+getRedeemPoints);
-		while (Integer.valueOf(getRedeemPoints)>0) {
-			driver.findElement(By.id("btncalredeemepoints")).click();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			driver.findElement(By.id("rdmepoints")).sendKeys(getRedeemPoints);
-			driver.findElement(By.xpath("//div[@id='divredeemepoints']//input[@value='Submit']")).click();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		}
-		
-	}
 
 }

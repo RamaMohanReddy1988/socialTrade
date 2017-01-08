@@ -47,11 +47,12 @@ public class TodayTaskTest extends BaseClass{
 			    int linkNum=Integer.valueOf(getTodayCompletedTaskPoints())+1;
 				driver.findElement(By.xpath("//div[@id='ajax-content']//tbody/tr["+linkNum+"]/td[4]/span[2]/i")).click();
 				System.out.println("clicking link number is  --> : "+linkNum);
+				Thread.sleep(1000);
 				System.out.println("  ");
 				int i=1;
 			while(driver.getWindowHandles().size()>1){
 				System.out.println("----Still popup window is opened----");
-				Thread.sleep(13000);
+				Thread.sleep(11000);
 				i++;
 				if (i>6) {
 					System.out.println("Alert message is present. So, navigating to child window to handle");
@@ -66,11 +67,18 @@ public class TodayTaskTest extends BaseClass{
 					driver.switchTo().window(myWindow);
 				}
 			}	
-			if (i==1) {
-				driver.findElement(By.xpath("//div[@id='ajax-content']//i[@class='fa fa-refresh']")).click();
+			while (!Integer.valueOf(getTodayCompletedTaskPoints()).equals(linkNum)) {
+				System.out.println("--Still Link status is not change");
+				Thread.sleep(5000);
+				if (i==1) {
+					break;
+				}
 			}
-			Thread.sleep(5000);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			if (i==1) {
+				System.out.println("Link is responding after click. S, refreshing -----");
+				driver.findElement(By.xpath("//div[@id='ajax-content']//tr["+linkNum+"]//i[@class='fa fa-refresh']")).click();
+				Thread.sleep(5000);
+			}
 			linkNum++;
 		}
 	}

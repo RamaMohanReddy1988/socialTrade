@@ -26,7 +26,7 @@ public class TodayTaskTest extends BaseClass{
 	public void testStartWorking() throws Exception{
 		System.out.println("Clicking Advertisements-----");
 		driver.findElement(By.xpath("//a[text()='View Advertisements']")).click();
-		Thread.sleep(10000);
+		Thread.sleep(60000);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Assert.assertTrue(isElementPresent(By.id("paidclicks")));
 		List<WebElement> rows = driver.findElements(By.xpath("//tr[@class='row_self']"));
@@ -67,9 +67,15 @@ public class TodayTaskTest extends BaseClass{
 					driver.switchTo().window(myWindow);
 				}
 			}	
+			int loop=1;
 			while (!Integer.valueOf(getTodayCompletedTaskPoints()).equals(linkNum)) {
 				System.out.println("--Still Link status is not change");
 				Thread.sleep(5000);
+				loop++;
+				if (loop==10) {
+					System.out.println("link is not working so need to refresh the link "+linkNum);
+					i=1;
+				}
 				if (i==1) {
 					break;
 				}
@@ -77,7 +83,7 @@ public class TodayTaskTest extends BaseClass{
 			if (i==1) {
 				System.out.println("Link is responding after click. S, refreshing -----");
 				driver.findElement(By.xpath("//div[@id='ajax-content']//tr["+linkNum+"]//i[@class='fa fa-refresh']")).click();
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 			}
 			linkNum++;
 		}

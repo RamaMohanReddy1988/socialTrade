@@ -26,7 +26,7 @@ public class TodayTaskTest extends BaseClass{
 	public void testStartWorking() throws Exception{
 		System.out.println("Clicking Advertisements-----");
 		driver.findElement(By.xpath("//a[text()='View Advertisements']")).click();
-		Thread.sleep(60000);
+		Thread.sleep(10000);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Assert.assertTrue(isElementPresent(By.id("paidclicks")));
 		List<WebElement> rows = driver.findElements(By.xpath("//tr[@class='row_self']"));
@@ -56,15 +56,14 @@ public class TodayTaskTest extends BaseClass{
 				i++;
 				if (i>6) {
 					System.out.println("Alert message is present. So, navigating to child window to handle");
-					String myWindow=driver.getWindowHandle();
-					System.out.println("My window is :  "+myWindow);
 					Set<String> windows=driver.getWindowHandles();
+					for (String window : windows) 
+						driver.switchTo().window(window);
+					driver.switchTo().alert().accept();
 					for (String window : windows) {
 						driver.switchTo().window(window);
+						break;
 					}
-					
-					driver.switchTo().alert().accept();
-					driver.switchTo().window(myWindow);
 				}
 			}	
 			int loop=1;

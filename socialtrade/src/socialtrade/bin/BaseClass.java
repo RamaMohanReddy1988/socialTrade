@@ -17,8 +17,8 @@ public class BaseClass {
 
 	WebDriver driver = new FirefoxDriver();
 //	
-	private String USERNAME="61828241";
-	private String PASSWORD="ramamohan@143";
+//	private String USERNAME="61828241";
+//	private String PASSWORD="ramamohan@143";
 	
 //	private String USERNAME="61913951";
 //	private String PASSWORD="chitti@143";
@@ -29,8 +29,8 @@ public class BaseClass {
 //	private String USERNAME="62197630";
 //	private String PASSWORD="segireddy@143";
 	
-//	private String USERNAME="61574860";
-//	private String PASSWORD="Sujitha@123";  
+	private String USERNAME="61574860";
+	private String PASSWORD="Sujitha@123";  
 	
 //	private String USERNAME="62105356";
 //	private String PASSWORD="yadiki@123";

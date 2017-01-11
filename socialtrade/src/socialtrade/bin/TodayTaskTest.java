@@ -68,7 +68,7 @@ public class TodayTaskTest extends BaseClass{
 			}	
 			int loop=1;
 			while (!Integer.valueOf(getTodayCompletedTaskPoints()).equals(linkNum)) {
-				System.out.println("--Still Link status is not change");
+				System.out.println("--Still Link status is not change. So, waiting.....");
 				Thread.sleep(5000);
 				loop++;
 				if (loop==10) {
@@ -80,9 +80,13 @@ public class TodayTaskTest extends BaseClass{
 				}
 			}
 			if (i==1) {
-				System.out.println("Link is responding after click. S, refreshing -----");
+				System.out.println("Link is not responding after click. So, refreshing -----");
+				String SiteUrl=driver.findElement(By.xpath("//div[@id='ajax-content']//tbody/tr["+linkNum+"]/td[2]/a")).getText();
 				driver.findElement(By.xpath("//div[@id='ajax-content']//tr["+linkNum+"]//i[@class='fa fa-refresh']")).click();
-				Thread.sleep(10000);
+				while (SiteUrl.equals(driver.findElement(By.xpath("//div[@id='ajax-content']//tbody/tr["+linkNum+"]/td[2]/a")).getText())) {
+					System.out.println("Site url is not changes even afer refresh.. So, waaiting.....");
+					Thread.sleep(10000);
+				}
 			}
 			linkNum++;
 		}

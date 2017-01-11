@@ -20,20 +20,9 @@ public class BaseClass {
 //	private String USERNAME="61828241";
 //	private String PASSWORD="ramamohan@143";
 	
-//	private String USERNAME="61913951";
-//	private String PASSWORD="chitti@143";
+	private String USERNAME="61913951";
+	private String PASSWORD="chitti@143";
 	
-//	private String USERNAME="61993813";
-//	private String PASSWORD="lakshmi@15";
-//	
-//	private String USERNAME="62197630";
-//	private String PASSWORD="segireddy@143";
-	
-	private String USERNAME="61574860";
-	private String PASSWORD="Sujitha@123";  
-	
-//	private String USERNAME="62105356";
-//	private String PASSWORD="yadiki@123";
 		
 	@BeforeClass
 	public void testLogin() throws Throwable{
@@ -42,18 +31,21 @@ public class BaseClass {
 		System.out.println("Login with username and password "+USERNAME+" / "+PASSWORD+"");
 		driver.findElement(By.id("txtEmailID")).sendKeys(USERNAME);
 		driver.findElement(By.id("txtPassword")).sendKeys(PASSWORD);
-		if (driver.findElement(By.id("popup")).isDisplayed()) {
+		/*if (driver.findElement(By.id("popup")).isDisplayed()) {
 			System.out.println("Popup is displayed. So, Closing");
 			driver.findElement(By.xpath("//div[@id='popup']/img[@class='close-image']")).click();
-		}
+		}*/
 		Thread.sleep(2000);
 		System.out.println("Clicking 'Login' button");
 		driver.findElement(By.id("CndSignIn")).click();
+		if (driver.findElement(By.xpath("//a[text()='Go to Website']")).isDisplayed()) {
+			driver.findElement(By.xpath("//a[text()='Go to Website']")).click();
+		}
 		System.out.println("Loin successfully ----");
-		if (driver.findElement(By.id("popup")).isDisplayed()) {
+		/*if (driver.findElement(By.id("popup")).isDisplayed()) {
 			System.out.println("Popup is displayed. So, Closing");
 			driver.findElement(By.xpath("//img[@class='close-image']")).click();
-		}
+		}*/
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//a[@class='dropdown-toggle']")).click();
 		Assert.assertTrue(isElementPresent(By.xpath("//span[text()='Sign Out']")));
